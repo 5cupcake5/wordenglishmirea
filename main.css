@@ -308,3 +308,108 @@ h1 {
     color: white;
     border-color: var(--primary);
 }
+.spelling-container {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.spelling-word {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--primary);
+}
+
+.spelling-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: var(--border);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.spelling-feedback {
+    min-height: 25px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.spelling-feedback.correct {
+    color: var(--correct);
+}
+
+.spelling-feedback.incorrect {
+    color: var(--incorrect);
+}
+.spelling-input {
+    width: 100%;
+    padding: 15px 20px;
+    margin: 20px 0;
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    font-size: 1.2rem;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.spelling-input:focus {
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+    transform: translateY(-2px);
+}
+
+.spelling-input::placeholder {
+    color: var(--text-color);
+    opacity: 0.5;
+}
+#next-spelling {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 200px;
+}
+
+#next-spelling:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.spelling-container {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.spelling-word {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--primary);
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

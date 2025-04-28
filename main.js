@@ -271,3 +271,64 @@
         }
         return newArray;
     }
+    // Глобальные переменные для режима правописания
+let currentSpellingWord = null;
+let spellingWords = [];
+
+// Инициализация режима правописания
+function initSpelling() {
+    spellingWords = [...allWords];
+    document.getElementById('spelling-input').value = '';
+    document.getElementById('spelling-feedback').textContent = '';
+    document.getElementById('spelling-feedback').className = 'spelling-feedback';
+    nextSpellingWord();
+    
+    // Обработчик нажатия Enter в поле ввода
+    document.getElementById('spelling-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            checkSpelling();
+        }
+    });
+    
+    // Обработчик кнопки "Далее"
+    document.getElementById('next-spelling').addEventListener('click', nextSpellingWord);
+}
+
+// Показать следующее слово для правописания
+function nextSpellingWord() {
+    if (spellingWords.length === 0) {
+        spellingWords = [...allWords]; // Начать заново, если слова закончились
+    }
+    
+    // Выбираем случайное слово
+    const randomIndex = Math.floor(Math.random() * spellingWords.length);
+    currentSpellingWord = spellingWords[randomIndex];
+    spellingWords.splice(randomIndex, 1); // Удаляем слово из массива, чтобы не повторялось
+    
+    document.getElementById('spelling-word').textContent = currentSpellingWord.ru;
+    document.getElementById('spelling-input').value = '';
+    document.getElementById('spelling-feedback').textContent = '';
+    document.getElementById('spelling-feedback').className = 'spelling-feedback';
+    document.getElementById('spelling-input').focus();
+}
+
+// Проверка введенного слова
+function checkSpelling() {
+    const userInput = document.getElementById('spelling-input').value.trim().toLowerCase();
+    const correctWord = currentSpellingWord.en.toLowerCase();
+    const feedback = document.getElementById('spelling-feedback');
+    
+    if (userInput === correctWord) {
+        feedback.textContent = 'Правильно!';
+        feedback.className = 'spelling-feedback correct';
+    } else {
+        feedback.textContent = `Неверно. Правильно: ${currentSpellingWord.en}`;
+        feedback.className = 'spelling-feedback incorrect';
+    }
+}
+
+// Добавьте вызов initSpelling() в обработчик DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // ... существующий код ...
+    initSpelling();
+});

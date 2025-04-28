@@ -20,6 +20,7 @@
         <div class="tabs">
             <button class="tab-btn active" data-tab="flashcards">Карточки</button>
             <button class="tab-btn" data-tab="test">Тест</button>
+            <button class="tab-btn" data-tab="spelling">Правописание</button>
         </div>
 
         <div id="flashcards" class="tab-content active">
@@ -43,6 +44,15 @@
                     </div>
                 </div>
                 <div id="test-result" class="test-result hidden"></div>
+            </div>
+        </div>
+        <div id="spelling" class="tab-content">
+            <div class="spelling-container">
+                <div class="spelling-word" id="spelling-word"></div>
+                <input class="spelling-input" type="text" id="spelling-input" placeholder="Введите слово на английском">
+                <div class="spelling-feedback" id="spelling-feedback"></div>
+                <div>нажмите enter для проверки</div>
+                <button class="btn" id="next-spelling">Далее</button>
             </div>
         </div>
     </div>

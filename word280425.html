@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Flashcards</title>
+    <style>
+        :root {
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --primary: #3498db;
+            --secondary: #2980b9;
+            --correct: #2ecc71;
+            --incorrect: #e74c3c;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+            --border: 1px solid #e0e0e0;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-color: #e6e6e6;
+            --primary: #4cc9f0;
+            --secondary: #4895ef;
+            --correct: #80ed99;
+            --incorrect: #ff5a5f;
+            --shadow: 0 4px 8px rgba(0,0,0,0.3);
+            --border: 1px solid #2d4059;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .theme-toggle {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: var(--border);
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Стили для карточек */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 150px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            background-color: var(--card-bg);
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+            background-color: var(--card-bg);
+        }
+
+        .word {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .transcription {
+            color: var(--text-color);
+            opacity: 0.7;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .translation {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        /* Стили для теста */
+        .test-container {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .test-question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            border: var(--border);
+        }
+
+        .test-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .test-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .test-option {
+            padding: 10px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: var(--border);
+        }
+
+        .test-option:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .test-option.correct {
+            background-color: var(--correct);
+            color: white;
+        }
+
+        .test-option.incorrect {
+            background-color: var(--incorrect);
+            color: white;
+        }
+
+        .test-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .btn-secondary:hover {
+            opacity: 1;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            overflow: hidden;
+            border: var(--border);
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .test-result {
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .test-result.good {
+            background-color: var(--correct);
+            color: white;
+        }
+
+        .test-result.bad {
+            background-color: var(--incorrect);
+            color: white;
+        }
+
+        .language-toggle {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: var(--border);
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>English Flashcards</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <span id="themeIcon">🌙</span>
+                <span id="themeText">Тёмная</span>
+            </button>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="flashcards">Карточки</button>
+            <button class="tab-btn" data-tab="test">Тест</button>
+        </div>
+
+        <div id="flashcards" class="tab-content active">
+            <div class="language-toggle">
+                <button class="toggle-btn active" data-lang="en">Показывать английские</button>
+                <button class="toggle-btn" data-lang="ru">Показывать русские</button>
+            </div>
+            <div class="flashcards-container" id="flashcards-container"></div>
+        </div>
+
+        <div id="test" class="tab-content">
+            <div class="test-container">
+                <div id="test-questions"></div>
+                <div class="test-controls">
+                    <button class="btn" id="check-test">Проверить</button>
+                    <button class="btn btn-secondary" id="new-test">Новый тест</button>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="test-progress"></div>
+                    </div>
+                </div>
+                <div id="test-result" class="test-result hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Все слова в одном массиве
+        const allWords = [
+            // Новые слова (добавлены по вашему списку)
+            { en: "applicant", ru: "кандидат, претендент, соискатель", transcription: "" },
+            { en: "career", ru: "карьера, профессия, профессиональная деятельность", transcription: "" },
+            { en: "competencies", ru: "профессиональные качества", transcription: "" },
+            { en: "concise", ru: "краткий (лаконичный)", transcription: "" },
+            { en: "cover letter", ru: "сопроводительное письмо", transcription: "" },
+            { en: "competitor", ru: "конкурент, соперник", transcription: "" },
+            { en: "confidence", ru: "уверенность", transcription: "" },
+            { en: "crucial", ru: "важный", transcription: "" },
+            { en: "CV (Curriculum vitae)", ru: "резюме (краткая биография)", transcription: "" },
+            { en: "employee", ru: "сотрудник", transcription: "" },
+            { en: "employer", ru: "работодатель", transcription: "" },
+            { en: "experience", ru: "опыт", transcription: "" },
+            { en: "HR (Human Resources)", ru: "отдел кадров", transcription: "" },
+            { en: "interview", ru: "собеседование", transcription: "" },
+            { en: "job description", ru: "должностные обязанности", transcription: "" },
+            { en: "key achievements", ru: "основные достижения", transcription: "" },
+            { en: "marital status", ru: "семейное положение", transcription: "" },
+            { en: "position", ru: "должность", transcription: "" },
+            { en: "recruitment", ru: "набор персонала, трудоустройство", transcription: "" },
+            { en: "salary", ru: "ежемесячная зарплата, оклад", transcription: "" },
+            { en: "to apply for a job", ru: "подавать заявление о приёме на работу", transcription: "" },
+            { en: "to be responsible for", ru: "быть ответственным за", transcription: "" },
+            { en: "to compete", ru: "конкурировать", transcription: "" },
+            { en: "to employ", ru: "нанимать", transcription: "" },
+            { en: "to fire", ru: "увольнять", transcription: "" },
+            { en: "to get a job", ru: "устроиться на работу", transcription: "" },
+            { en: "to offer", ru: "предлагать", transcription: "" },
+            { en: "to qualify", ru: "соответствовать требованиям, приобретать специальность", transcription: "" },
+            { en: "to require", ru: "требовать", transcription: "" },
+            { en: "vacancy", ru: "вакансия", transcription: "" }
+        ];
+
+        // Глобальные переменные
+        let currentLanguage = 'en';
+        let darkMode = false;
+        let testWords = [];
+        let userAnswers = [];
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка темы из localStorage
+            loadTheme();
+            
+            // Инициализация вкладок
+            initTabs();
+            
+            // Инициализация карточек
+            renderFlashcards();
+            
+            // Инициализация теста
+            initTest();
+            
+            // Обработчики событий для переключения языка
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentLanguage = this.dataset.lang;
+                    renderFlashcards();
+                });
+            });
+            
+            // Кнопка проверки теста
+            document.getElementById('check-test').addEventListener('click', checkTest);
+            
+            // Кнопка нового теста
+            document.getElementById('new-test').addEventListener('click', initTest);
+            
+            // Кнопка переключения темы
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        });
+
+        // Функция загрузки темы
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                enableDarkMode();
+            }
+        }
+
+        // Функция переключения темы
+        function toggleTheme() {
+            if (darkMode) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        }
+
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeIcon').textContent = '☀️';
+            document.getElementById('themeText').textContent = 'Светлая';
+            darkMode = true;
+            localStorage.setItem('theme', 'dark');
+        }
+
+        function disableDarkMode() {
+            document.body.classList.remove('dark-mode');
+            document.getElementById('themeIcon').textContent = '🌙';
+            document.getElementById('themeText').textContent = 'Тёмная';
+            darkMode = false;
+            localStorage.setItem('theme', 'light');
+        }
+
+        // Функция инициализации вкладок
+        function initTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок и вкладок
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей кнопке и вкладке
+                    this.classList.add('active');
+                    const tabId = this.dataset.tab;
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // Функция отрисовки карточек
+        function renderFlashcards() {
+            const container = document.getElementById('flashcards-container');
+            container.innerHTML = '';
+            
+            // Создаем карточки для каждого слова
+            allWords.forEach(word => {
+                const card = document.createElement('div');
+                card.className = 'flashcard';
+                card.innerHTML = `
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            <div class="word">${currentLanguage === 'en' ? word.en : word.ru}</div>
+                            <div class="transcription">${word.transcription}</div>
+                            <div class="translation">${currentLanguage === 'en' ? "Нажмите, чтобы увидеть перевод" : "Click to see in English"}</div>
+                        </div>
+                        <div class="flashcard-back">
+                            <div class="word">${currentLanguage === 'en' ? word.ru : word.en}</div>
+                            <div class="transcription">${word.transcription}</div>
+                            <div class="translation">${currentLanguage === 'en' ? "Перевод" : "English"}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Добавляем обработчик клика для переворота карточки
+                card.addEventListener('click', function() {
+                    this.classList.toggle('flipped');
+                });
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Функция инициализации теста
+        function initTest() {
+            const container = document.getElementById('test-questions');
+            container.innerHTML = '';
+            userAnswers = [];
+            
+            // Перемешиваем слова
+            testWords = shuffleArray([...allWords]);
+            
+            // Ограничиваем количество вопросов
+            testWords = testWords.slice(0, 10);
+            
+            // Создаем вопросы
+            testWords.forEach((word, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'test-question';
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. Как переводится "${word.en}"?</p>
+                    <div class="test-options" id="options-${index}"></div>
+                `;
+                container.appendChild(questionDiv);
+                
+                // Создаем варианты ответов
+                const optionsContainer = document.getElementById(`options-${index}`);
+                
+                // Получаем 3 случайных неправильных варианта
+                const wrongOptions = shuffleArray(allWords
+                    .filter(w => w.ru !== word.ru)
+                    .map(w => w.ru))
+                    .slice(0, 3);
+                
+                // Добавляем правильный вариант
+                const options = shuffleArray([...wrongOptions, word.ru]);
+                
+                // Создаем кнопки вариантов
+                options.forEach(option => {
+                    const optionBtn = document.createElement('div');
+                    optionBtn.className = 'test-option';
+                    optionBtn.textContent = option;
+                    optionBtn.dataset.index = index;
+                    optionBtn.dataset.option = option;
+                    optionBtn.addEventListener('click', function() {
+                        selectTestOption(this, index, option === word.ru);
+                    });
+                    optionsContainer.appendChild(optionBtn);
+                });
+            });
+            
+            // Сбрасываем прогресс
+            document.getElementById('test-progress').style.width = '0%';
+            document.getElementById('test-result').classList.add('hidden');
+        }
+
+        // Функция выбора варианта в тесте
+        function selectTestOption(element, questionIndex, isCorrect) {
+            // Снимаем выделение с других вариантов в этом вопросе
+            const options = document.querySelectorAll(`#options-${questionIndex} .test-option`);
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'incorrect', 'selected');
+            });
+            
+            // Добавляем классы в зависимости от правильности ответа
+            if (isCorrect) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('incorrect');
+                // Находим и подсвечиваем правильный ответ
+                options.forEach(opt => {
+                    if (opt.dataset.option === testWords[questionIndex].ru) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            element.classList.add('selected');
+            
+            // Сохраняем ответ пользователя
+            userAnswers[questionIndex] = {
+                isCorrect,
+                userAnswer: element.dataset.option,
+                correctAnswer: testWords[questionIndex].ru
+            };
+            
+            // Обновляем прогресс
+            updateTestProgress();
+        }
+
+        // Функция обновления прогресса теста
+        function updateTestProgress() {
+            const answered = userAnswers.filter(a => a !== undefined).length;
+            const total = testWords.length;
+            const progress = (answered / total) * 100;
+            document.getElementById('test-progress').style.width = `${progress}%`;
+        }
+
+        // Функция проверки теста
+        function checkTest() {
+            const total = testWords.length;
+            const correct = userAnswers.filter(a => a && a.isCorrect).length;
+            const percentage = Math.round((correct / total) * 100);
+            
+            const resultDiv = document.getElementById('test-result');
+            resultDiv.textContent = `Результат: ${correct} из ${total} (${percentage}%)`;
+            resultDiv.className = percentage >= 70 ? 'test-result good' : 'test-result bad';
+            resultDiv.classList.remove('hidden');
+        }
+
+        // Вспомогательная функция для перемешивания массива
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+    </script>
+</body>
+</html>

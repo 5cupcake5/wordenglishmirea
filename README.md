@@ -1,2 +1,0 @@
-# wordenglishmirea
-word english mirea

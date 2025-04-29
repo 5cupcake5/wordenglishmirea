@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
-    <title>English Flashcards</title>
+    <title>Eng Helper</title>
+    <script src="main.js"></script>
+    <link rel="icon" href="img/icon.png" type="image/x-icon">
     <script src="main.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -25,11 +27,13 @@
             </button>
         </header>
 
+
         <div class="tabs">
             <button class="tab-btn active" data-tab="flashcards">Карточки</button>
             <button class="tab-btn" data-tab="test">Тест</button>
             <button class="tab-btn" data-tab="spelling">Правописание</button>
         </div>
+        
 
         <div id="flashcards" class="tab-content active">
             <div class="language-toggle">
@@ -44,7 +48,7 @@
                 <div id="test-questions"></div>
                 <div class="test-controls">
                     <button class="btn" id="check-test">Проверить</button>
-                    <button class="btn btn-secondary" id="new-test">Новый тест</button>
+                    <button class="changelog-btn" id="new-test">Новый тест</button>
                 </div>
                 <div class="progress-container">
                     <div class="progress-bar">
@@ -65,5 +69,38 @@
         </div>
     </div>
 
+<!-- Само модальное окно -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Список изменений 0.2</h2>
+        <h4>Добавленно</h4>
+        <ul type="disc">
+            <li>[+] Иконка сайта</li>
+            <li>[+] Подвал сайта</li>
+            <li>[+] Список изменений</li>
+        </ul>
+        <h4>Улучшения</h4>
+        <ul>
+            <li>[⮤] Позиционирование ячеек сайта</li>
+            <li>[⮤] Кнопка в тестах</li>
+            <li>[⮤] Инпут в Правоптсании</li>
+            <li>[⮤] Дизайн черной темы</li>
+            <li>[⮤] Название сайта)</li>
+        </ul>
+    </div>
+</div>
+
+
+
+</div>
+    <footer class="site-footer">
+        <div class="footer-content">
+            <img src="img/icon.png" alt="Логотип" width="25" height="25">
+            <p>CZ | Версия сайта 0.2 © 2025</p>
+            <!-- Кнопка для открытия окна -->
+            <button id="modal-open-btn" class="changelog-btn"> Список изменений </button>
+        </div>
+    </footer>
 </body>
 </html>

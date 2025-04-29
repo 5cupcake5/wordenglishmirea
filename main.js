@@ -30,7 +30,10 @@
         { en: "to offer", ru: "предлагать", transcription: "" },
         { en: "to qualify", ru: "соответствовать требованиям, приобретать специальность", transcription: "" },
         { en: "to require", ru: "требовать", transcription: "" },
-        { en: "vacancy", ru: "вакансия", transcription: "" }
+        { en: "vacancy", ru: "вакансия", transcription: "" },
+        { en: "английское слово", ru: "перевод", transcription: "[транскрипция]" }
+        
+        
     ];
 
     // Глобальные переменные
@@ -331,4 +334,45 @@ function checkSpelling() {
 document.addEventListener('DOMContentLoaded', function() {
     // ... существующий код ...
     initSpelling();
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем элементы
+    const modal = document.getElementById("modal");
+    const modalBtn = document.getElementById("modal-open-btn");
+    const closeBtn = document.querySelector(".modal-close");
+
+    // Проверяем, что элементы существуют перед добавлением обработчиков
+    if (modal && modalBtn && closeBtn) {
+        // Открытие окна
+        modalBtn.addEventListener("click", function() {
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        });
+
+        // Закрытие на крестик
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        });
+
+        // Закрытие при клике вне окна
+        window.addEventListener("click", function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // Закрытие на Escape
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape" && modal.style.display === "block") {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        });
+    } else {
+        console.error("Один из элементов модального окна не найден");
+    }
 });

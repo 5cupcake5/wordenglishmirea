@@ -8,6 +8,7 @@
     <script src="main.js"></script>
     <link rel="icon" href="img/icon.png" type="image/x-icon">
     <script src="main.js"></script>
+    <script src="top.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
@@ -18,9 +19,28 @@
     </script>
 </head>
 <body>
+
+    <div class="container">
+        <div class="info-block">
+          <div class="first-line">
+            <div class="info-item left-align" style="font-size: 25px;">
+              <span id="currentWeek" class="value" >12</span> учебная неделя
+            </div>
+            
+            <div class="info-item left-align">
+              <span id="daysToSummer" class="value">100</span> дней до лета
+            </div>
+          </div>
+          
+          <div class="info-item right-align conversation">
+            Ближайшая беседа 17.05 - 25.05 (14 неделя)⏳
+          </div>
+        </div>
+      </div>
+
     <div class="container">
         <header>
-            <h1>Диктант по английскому 29.04 [Стр 121-122]</h1>
+            <h1>Eng Helper</h1>
             <button class="theme-toggle" id="themeToggle">
                 <span id="themeIcon">🌙</span>
                 <span id="themeText">Тёмная</span>
@@ -73,20 +93,25 @@
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2>Список изменений 0.2</h2>
+        <h2>Список изменений 0.2.1</h2>
         <h4>Добавленно</h4>
         <ul type="disc">
-            <li>[+] Иконка сайта</li>
+            <!-- <li>[+] Иконка сайта</li>
             <li>[+] Подвал сайта</li>
-            <li>[+] Список изменений</li>
+            <li>[+] Список изменений</li> -->
+            <li>[+] Информативная панель</li>
         </ul>
-        <h4>Улучшения</h4>
+        <!-- <h4>Улучшения</h4>
         <ul>
             <li>[⮤] Позиционирование ячеек сайта</li>
             <li>[⮤] Кнопка в тестах</li>
             <li>[⮤] Инпут в Правоптсании</li>
             <li>[⮤] Дизайн черной темы</li>
             <li>[⮤] Название сайта)</li>
+        </ul> -->
+        <h4>Удалено</h4>
+        <ul type="disc">
+            <li>[-] Слова с диктанта</li>
         </ul>
     </div>
 </div>
@@ -97,7 +122,7 @@
     <footer class="site-footer">
         <div class="footer-content">
             <img src="img/icon.png" alt="Логотип" width="25" height="25">
-            <p>CZ | Версия сайта 0.2 © 2025</p>
+            <p>CZ | Версия сайта 0.2.1 © 2025</p>
             <!-- Кнопка для открытия окна -->
             <button id="modal-open-btn" class="changelog-btn"> Список изменений </button>
         </div>

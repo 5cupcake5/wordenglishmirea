@@ -1,39 +1,8 @@
     // Все слова в одном массиве
     const allWords = [
         // Новые слова (добавлены по вашему списку)
-        { en: "applicant", ru: "кандидат, претендент, соискатель", transcription: "" },
-        { en: "career", ru: "карьера, профессия, профессиональная деятельность", transcription: "" },
-        { en: "competencies", ru: "профессиональные качества", transcription: "" },
-        { en: "concise", ru: "краткий (лаконичный)", transcription: "" },
-        { en: "cover letter", ru: "сопроводительное письмо", transcription: "" },
-        { en: "competitor", ru: "конкурент, соперник", transcription: "" },
-        { en: "confidence", ru: "уверенность", transcription: "" },
-        { en: "crucial", ru: "важный", transcription: "" },
-        { en: "CV (Curriculum vitae)", ru: "резюме (краткая биография)", transcription: "" },
-        { en: "employee", ru: "сотрудник", transcription: "" },
-        { en: "employer", ru: "работодатель", transcription: "" },
-        { en: "experience", ru: "опыт", transcription: "" },
-        { en: "HR (Human Resources)", ru: "отдел кадров", transcription: "" },
-        { en: "interview", ru: "собеседование", transcription: "" },
-        { en: "job description", ru: "должностные обязанности", transcription: "" },
-        { en: "key achievements", ru: "основные достижения", transcription: "" },
-        { en: "marital status", ru: "семейное положение", transcription: "" },
-        { en: "position", ru: "должность", transcription: "" },
-        { en: "recruitment", ru: "набор персонала, трудоустройство", transcription: "" },
-        { en: "salary", ru: "ежемесячная зарплата, оклад", transcription: "" },
-        { en: "to apply for a job", ru: "подавать заявление о приёме на работу", transcription: "" },
-        { en: "to be responsible for", ru: "быть ответственным за", transcription: "" },
-        { en: "to compete", ru: "конкурировать", transcription: "" },
-        { en: "to employ", ru: "нанимать", transcription: "" },
-        { en: "to fire", ru: "увольнять", transcription: "" },
-        { en: "to get a job", ru: "устроиться на работу", transcription: "" },
-        { en: "to offer", ru: "предлагать", transcription: "" },
-        { en: "to qualify", ru: "соответствовать требованиям, приобретать специальность", transcription: "" },
-        { en: "to require", ru: "требовать", transcription: "" },
-        { en: "vacancy", ru: "вакансия", transcription: "" },
-        { en: "английское слово", ru: "перевод", transcription: "[транскрипция]" }
-        
-        
+        { en: "Скоро беседа", ru: "Следите за обновлениями", transcription: "" },
+
     ];
 
     // Глобальные переменные
@@ -376,3 +345,14 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error("Один из элементов модального окна не найден");
     }
 });
+
+
+
+
+
+
+
+
+
+
+

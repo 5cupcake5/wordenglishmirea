@@ -506,3 +506,62 @@ h1 {
     margin: 0 5px;
     transition: all 0.3s;
 }
+
+/* блок даты */
+.info-block {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  width: 100%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+.info-item {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.left-align {
+  text-align: left;
+  
+}
+
+.center-align {
+  text-align: center;
+}
+
+.right-align {
+  text-align: right;
+  font-size: 25px;
+}
+
+.value {
+  font-weight: bold;
+}
+
+.info-block {
+    /* Существующие стили */
+    border: none; /* Убираем стандартную рамку */
+    padding: 10px; /* Уменьшаем отступы */
+    position: relative;
+  }
+  
+  .info-block::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 5px;
+    padding: 2px; /* Толщина градиентной рамки */
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box, 
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  
